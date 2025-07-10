@@ -18,17 +18,15 @@ function salvarDados() {
   fs.writeFileSync(caminhoArquivo, JSON.stringify(dadosClientes, null, 2));
 }
 
-venom
-  .create({
-    session: 'botzap',
-    multidevice: true,
-    headless: true,
-    useChrome: true,
-    disableWelcome: true,
-    disableSpins: true,
-  })
-  .then((client) => start(client))
-  .catch((erro) => console.error('Erro ao iniciar VenomBot:', erro));
+venom.create({
+  session: 'botzap',
+  multidevice: true,
+  headless: false,  // Desativando o headless
+  useChrome: true,
+  disableWelcome: true,
+  disableSpins: true,
+}).then((client) => start(client))
+  .catch((erro) => console.log('Erro ao iniciar VenomBot:', erro));
 
 async function start(client) {
   const historico = {};
@@ -131,7 +129,7 @@ Respostas com no máximo 50 caracteres por mensagem, mas sempre terminando a fra
         },
         {
           headers: {
-         Authorization: `Bearer ${process.env.OPENAI_KEY}`
+         Authorization: `Bearer ${process.env.OPENAI_KEY}`,
             'Content-Type': 'application/json'
           }
         }
